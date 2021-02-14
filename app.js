@@ -15,6 +15,7 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 
 const getImages = (query) => {
+  toggleSpinner();
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
@@ -33,7 +34,7 @@ const showImages = (images) => {
     div.innerHTML = ` <img class="img-fluid img-thumbnail" id="clearSelect" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
   })
-
+  toggleSpinner();
 }
 // ---------add keyboard enter button feature
 let input = document.getElementById("search").addEventListener("keyup", function (event) {
@@ -92,10 +93,11 @@ const createSlider = () => {
       slideIndex++;
       changeSlide(slideIndex);
     }, duration);
-  } else {
-    document.write("Enter positive value");
+  }else{
+   alert("Enter a positive value");
+    document.write("Reload the page");
   }
-
+    
 
 }
 
@@ -119,10 +121,10 @@ const changeSlide = (index) => {
   }
 
   items.forEach(item => {
-    item.style.display = "none"
+    item.style.display = "none";
   })
 
-  items[index].style.display = "block"
+  items[index].style.display = "block";
 }
 
 searchBtn.addEventListener('click', function () {
@@ -136,3 +138,9 @@ searchBtn.addEventListener('click', function () {
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+// toggle Spinner
+const toggleSpinner = () =>{
+  const spinner = document.getElementById('loading-spinner');
+  spinner.classList.toggle('d-none');
+}
